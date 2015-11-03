@@ -14,6 +14,7 @@ public final class Constants {
     public static final String FIREBASE_LOCATION_ACTIVE_LISTS = "activeLists";
     public static final String FIREBASE_LOCATION_SHOPPING_LIST_ITEMS = "shoppingListItems";
     public static final String FIREBASE_LOCATION_USERS = "users";
+    public static final String FIREBASE_LOCATION_USER_LISTS = "userLists";
 
 
     /**
@@ -37,6 +38,7 @@ public final class Constants {
     public static final String FIREBASE_URL_ACTIVE_LISTS = FIREBASE_URL + "/" + FIREBASE_LOCATION_ACTIVE_LISTS;
     public static final String FIREBASE_URL_SHOPPING_LIST_ITEMS = FIREBASE_URL + "/" + FIREBASE_LOCATION_SHOPPING_LIST_ITEMS;
     public static final String FIREBASE_URL_USERS = FIREBASE_URL + "/" + FIREBASE_LOCATION_USERS;
+    public static final String FIREBASE_URL_USER_LISTS = FIREBASE_URL + "/" + FIREBASE_LOCATION_USER_LISTS;
 
 
     /**
