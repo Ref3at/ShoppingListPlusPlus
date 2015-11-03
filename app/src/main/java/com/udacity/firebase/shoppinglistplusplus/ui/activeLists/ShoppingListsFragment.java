@@ -110,6 +110,8 @@ public class ShoppingListsFragment extends Fragment {
         String sortOrder = sharedPref.getString(Constants.KEY_PREF_SORT_ORDER_LISTS, Constants.ORDER_BY_KEY);
 
         Query orderedActiveUserListsRef;
+        // TODO activeListsRef is the reference that determines what is displayed in the MainActivity.
+        // You should update what location it points to.
         Firebase activeListsRef = new Firebase(Constants.FIREBASE_URL_ACTIVE_LISTS);
         /**
          * Sort active lists by "date created"
