@@ -78,6 +78,8 @@ public class Utils {
 
         mapToUpdate.put("/" + Constants.FIREBASE_LOCATION_USER_LISTS + "/" + owner + "/" + Constants.FIREBASE_LOCATION_ACTIVE_LISTS + "/"
                 + listId + "/" + propertyToUpdate, valueToUpdate);
+        // TODO Update this method so that it also makes the change to ever user in the sharedWith
+        // list of the shopping list.
 
         return mapToUpdate;
     }
