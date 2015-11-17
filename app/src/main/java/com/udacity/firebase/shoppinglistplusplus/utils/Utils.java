@@ -5,6 +5,7 @@ import android.content.Context;
 import com.firebase.client.Firebase;
 import com.firebase.client.ServerValue;
 import com.udacity.firebase.shoppinglistplusplus.model.ShoppingList;
+import com.udacity.firebase.shoppinglistplusplus.model.User;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -59,6 +60,7 @@ public class Utils {
      * The HashMap can then be used with {@link Firebase#updateChildren(Map)} to update the property
      * for all ShoppingList copies.
      *
+     * @param sharedWith            The list of users the shopping list that has been updated is shared with.
      * @param listId           The id of the shopping list.
      * @param owner            The owner of the shopping list.
      * @param mapToUpdate      The map containing the key, value pairs which will be used
@@ -69,7 +71,7 @@ public class Utils {
      * @return The updated HashMap with the new value inserted in all lists
      */
     public static HashMap<String, Object> updateMapForAllWithValue
-    (final String listId,
+    (final HashMap<String, User> sharedWith, final String listId,
      final String owner, HashMap<String, Object> mapToUpdate,
      String propertyToUpdate, Object valueToUpdate) {
 
@@ -78,8 +80,12 @@ public class Utils {
 
         mapToUpdate.put("/" + Constants.FIREBASE_LOCATION_USER_LISTS + "/" + owner + "/" + Constants.FIREBASE_LOCATION_ACTIVE_LISTS + "/"
                 + listId + "/" + propertyToUpdate, valueToUpdate);
-        // TODO Update this method so that it also makes the change to ever user in the sharedWith
-        // list of the shopping list.
+        if (sharedWith != null) {
+            for (User user : sharedWith.values()) {
+                mapToUpdate.put("/" + Constants.FIREBASE_LOCATION_USER_LISTS + "/" + user.getEmail() + "/" + Constants.FIREBASE_LOCATION_ACTIVE_LISTS + "/"
+                        + listId + "/" + propertyToUpdate, valueToUpdate);
+            }
+        }
 
         return mapToUpdate;
     }
@@ -89,6 +95,7 @@ public class Utils {
      * the ShoppingList copies. This method uses {@link #updateMapForAllWithValue} to update the
      * last changed timestamp for all ShoppingList copies.
      *
+     * @param sharedWith            The list of users the shopping list that has been updated is shared with.
      * @param listId               The id of the shopping list.
      * @param owner                The owner of the shopping list.
      * @param mapToAddDateToUpdate The map containing the key, value pairs which will be used
@@ -97,7 +104,7 @@ public class Utils {
      * @return
      */
     public static HashMap<String, Object> updateMapWithTimestampLastChanged
-    (final String listId,
+    (final HashMap<String, User> sharedWith, final String listId,
      final String owner, HashMap<String, Object> mapToAddDateToUpdate) {
         /**
          * Set raw version of date to the ServerValue.TIMESTAMP value and save into dateCreatedMap
@@ -105,7 +112,7 @@ public class Utils {
         HashMap<String, Object> timestampNowHash = new HashMap<>();
         timestampNowHash.put(Constants.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
 
-        updateMapForAllWithValue(listId, owner, mapToAddDateToUpdate,
+        updateMapForAllWithValue(sharedWith, listId, owner, mapToAddDateToUpdate,
                 Constants.FIREBASE_PROPERTY_TIMESTAMP_LAST_CHANGED, timestampNowHash);
 
         return mapToAddDateToUpdate;
